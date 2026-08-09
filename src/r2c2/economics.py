@@ -22,7 +22,7 @@ from .pricing import MILLION, ModelPrice, price_for
 def cost_multiplier(C: float, Q: float, O: float, n_samples: int, price: ModelPrice) -> float:
     """Cost of N samples of the same prompt relative to one unscored call.
 
-    Reproduces every measured model in receipts/receipt_uq.json to within a few
+    Reproduces every measured model in tests/data/receipt_uq.json to within a few
     hundredths (the residual is cache-write vs cache-read token counts differing
     slightly on real calls).
     """

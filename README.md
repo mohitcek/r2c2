@@ -15,7 +15,7 @@ The most portable way to catch an LLM being unreliable is to sample the same pro
 
 And the score catches real failures: on a question the test policy doesn't answer, Qwen went No-Yes-No-Yes-No-Yes across six samples (noncontradiction 0.40) and Gemini cited regulations that appear nowhere in the prompt. On a question the policy answers directly, every model scores 0.99+.
 
-This repo is both the receipts behind the blog post *"As Context Grows, Confidence Scoring Gets Cheaper"* and a small library that turns the finding into a workflow: **estimate → sample → score**.
+r2c2 turns that finding into a workflow: **estimate → sample → score**. The measurements, experiment scripts, receipts, and figures behind these numbers live on the [`blog`](../../tree/blog) branch.
 
 ## Install
 
@@ -25,7 +25,6 @@ Requires [uv](https://docs.astral.sh/uv/) and Python ≥ 3.10.
 uv sync                        # core: cost math + CLI, zero dependencies
 uv sync --extra providers      # + OpenAI / Anthropic / Google SDKs for sampling
 uv sync --extra scoring        # + UQLM noncontradiction scoring (pulls torch, large)
-uv sync --extra all            # everything, including figure generators
 ```
 
 ## Quickstart
@@ -82,37 +81,31 @@ calls = sample("gpt-5.6-terra", context, question, n_samples=6)
 confidence([c.answer for c in calls])   # local NLI, no extra API calls
 ```
 
-## Reproducing the blog post
+## The cost model
 
-Roughly $2 for a full 6-model sweep; any subset of API keys works, missing providers are skipped.
+For N samples of the same prompt:
 
-```bash
-uv sync --extra all
-export OPENAI_API_KEY=... ANTHROPIC_API_KEY=... GEMINI_API_KEY=... TOGETHER_API_KEY=...
+```
+M = N − f · (N − w − (N−1)·c)        f = C / (C + Q + k·O)
 
-uv run python experiments/cache_receipt.py --question airline-fault --nonce run1 \
-    --out receipts/receipt_uq.json                      # 6 identical calls per model
-uv run python experiments/confidence_score.py --receipt receipts/receipt_uq.json \
-    --out receipts/confidence_uq.json                   # score the answers
-uv run python experiments/cost_report.py --receipt receipts/receipt_uq.json   # the economics
+C  cached context tokens        c  cached ÷ input rate   (~0.1; 1.0 if no cached price)
+Q  uncached input per call      w  write ÷ input rate    (1.0; 1.25 on Anthropic)
+O  output tokens                k  output ÷ input price
 ```
 
-Use a fresh `--nonce` per run or call 1 will report a warm cache from your previous run. `experiments/context_sweep.py` sweeps context size; `experiments/question_probe.py` is how the ambiguous question was found; `experiments/figures/` regenerates every chart from the JSON receipts.
+`f` is the cost-weighted share of the request that rides the cache; `M` is a straight line in it — N when nothing caches, the floor `w + (N−1)c` when everything does. The tests validate this against a shipped receipt of live measured runs (`tests/data/receipt_uq.json`) to within a few hundredths.
 
 ## Layout
 
 ```text
-src/r2c2/        the package
-  pricing.py           published prices (dated — re-verify before quoting)
-  economics.py         cost_multiplier / cost_floor / estimate / required_context: the closed-form cost model and its inversion
-  providers.py         4 API runners, cached-token counts normalised
-  scoring.py           UQLM noncontradiction wrapper (lazy import)
-  check.py             check(): the estimate -> sample -> score loop
-  cli.py               r2c2 models | estimate | check
-experiments/         the scripts behind the blog post, as thin CLIs over the package
-receipts/            raw JSON from the July 30–31, 2026 runs
-figures/             charts generated from the receipts
-tests/               offline: validates the closed form against the receipts
+src/r2c2/
+  pricing.py       published prices (dated — re-verify before quoting)
+  economics.py     cost_multiplier / cost_floor / estimate / required_context
+  providers.py     4 API runners, cached-token counts normalised
+  scoring.py       UQLM noncontradiction wrapper (lazy import)
+  check.py         check(): the estimate -> sample -> score loop
+  cli.py           r2c2 models | estimate | check
+tests/             offline; validates the closed form against a measured receipt
 ```
 
 ## Things that will bite you
@@ -131,4 +124,4 @@ tests/               offline: validates the closed form against the receipts
 
 ## Provenance
 
-Written to accompany the blog post *"As Context Grows, Confidence Scoring Gets Cheaper"*. Built on [UQLM](https://github.com/cvs-health/uqlm). Prices and model IDs are as of 2026-07-31 — verify yours before trusting any multiplier here. MIT licensed.
+Grew out of the blog post *"As Context Grows, Confidence Scoring Gets Cheaper"* — the experiment scripts, raw JSON receipts, and figures are on the [`blog`](../../tree/blog) branch. Built on [UQLM](https://github.com/cvs-health/uqlm). Prices and model IDs are as of 2026-07-31 — verify yours before trusting any multiplier here. MIT licensed.

@@ -15,7 +15,7 @@ from r2c2 import (
     required_context,
 )
 
-RECEIPT = Path(__file__).parent.parent / "receipts" / "receipt_uq.json"
+RECEIPT = Path(__file__).parent / "data" / "receipt_uq.json"
 
 
 def test_floor_openai_and_anthropic():
@@ -48,7 +48,8 @@ def test_closed_form_matches_measured_costs_exactly():
 
 
 def test_closed_form_matches_receipt():
-    # The measured runs behind the blog post, reproduced from token counts alone.
+    # The measured runs behind the blog post (shipped as a fixture), reproduced
+    # from token counts alone.
     receipt = json.loads(RECEIPT.read_text())
     n = receipt["calls_per_model"]
     checked = 0
