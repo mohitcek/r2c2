@@ -1,0 +1,175 @@
+{
+  "scorer": "noncontradiction",
+  "results": [
+    {
+      "model": "gpt-5.6-terra",
+      "question": "airline-fault",
+      "probes": "policy silent on who cancelled",
+      "noncontradiction_mean": 0.6646,
+      "noncontradiction_min": 0.0056,
+      "distinct": 5,
+      "samples": 6,
+      "answers": [
+        "Yes, because the airline cancelled the flight, they are eligible for a refund despite the fare being non-refundable and booked more than 24 hours ago.",
+        "Yes, because the airline cancelled the flight, they are eligible for a refund despite the non-refundable fare\u2019s 24-hour booking limit.",
+        "Yes, because the airline cancelled the flight, they are eligible for a refund despite the non-refundable fare\u2019s 24-hour limit.",
+        "Under the stated policy, no\u2014the non-refundable fare was booked more than 24 hours ago, and no cancellation exception is specified.",
+        "Yes, because the airline cancelled the flight, they are eligible for a refund despite the non-refundable fare\u2019s 24-hour booking limit.",
+        "Yes, because the airline cancelled the flight, they are eligible for a refund despite the fare\u2019s normal 24-hour non-refundable restriction."
+      ]
+    },
+    {
+      "model": "gemini-3.6-flash",
+      "question": "schedule-change",
+      "probes": "airline moved the flight; policy silent on schedule changes",
+      "noncontradiction_mean": 0.9978,
+      "noncontradiction_min": 0.9964,
+      "distinct": 6,
+      "samples": 6,
+      "answers": [
+        "Based on Clause 1 of the policy, the customer is not eligible for a refund because non-refundable fares can only be refunded within 24 hours of booking.",
+        "Based strictly on Clause 1 of the provided policy, the customer is not eligible for a refund because non-refundable fares can only be refunded within 24 hours of booking, and three weeks have passed.",
+        "Based on the provided policy, the customer is not eligible for a refund because non-refundable fares can only be refunded within 24 hours of booking.",
+        "Based strictly on the provided policy, the customer is not eligible for a refund because non-refundable fares can only be refunded within 24 hours of booking, and no exceptions for airline schedule changes are mentioned.",
+        "Based strictly on Clause 1 of the provided policy, the customer is not eligible for a refund because non-refundable fares can only be refunded within 24 hours of booking, and no exceptions are outlined for airline schedule changes.",
+        "Based strictly on Clause 1 of the policy, the customer is not eligible for a refund because more than 24 hours have passed since they booked their non-refundable fare."
+      ]
+    },
+    {
+      "model": "gemini-3.6-flash",
+      "question": "duplicate-booking",
+      "probes": "obvious mistake, but outside the 24h window",
+      "noncontradiction_mean": 0.9982,
+      "noncontradiction_min": 0.9973,
+      "distinct": 6,
+      "samples": 6,
+      "answers": [
+        "No, the customer is not eligible for a refund because the duplicate non-refundable ticket was booked 30 hours ago, exceeding the policy's 24-hour limit.",
+        "No, the customer is not eligible for a refund because non-refundable fares can only be refunded within 24 hours of booking, and 30 hours have elapsed since the booking.",
+        "No, the customer is not eligible for a refund because the duplicate non-refundable flight was booked 30 hours ago, exceeding the policy's 24-hour window for non-refundable fare refunds.",
+        "No, the customer is not eligible for a refund because the flight was a non-refundable fare and more than 24 hours have passed since it was booked.",
+        "No, the customer is not eligible for a refund because non-refundable fares can only be refunded within 24 hours of booking, and 30 hours have elapsed.",
+        "No, the customer is not eligible for a refund because more than 24 hours have passed since the non-refundable flight was booked."
+      ]
+    },
+    {
+      "model": "gemini-3.6-flash",
+      "question": "airline-fault",
+      "probes": "policy silent on who cancelled",
+      "noncontradiction_mean": 0.9985,
+      "noncontradiction_min": 0.998,
+      "distinct": 6,
+      "samples": 6,
+      "answers": [
+        "Based on the provided policy, the customer is not eligible for a refund because more than 24 hours have passed since booking the non-refundable fare, and the policy states no exceptions for airline cancellations.",
+        "Based strictly on Clause 1 of the policy, the customer is not eligible for a refund because more than 24 hours have passed since booking a non-refundable fare, and the text provides no exception for airline-initiated cancellations.",
+        "Based strictly on Clause 1 of the policy, the customer is not eligible for a refund because non-refundable fares may only be refunded within 24 hours of booking.",
+        "Based strictly on the provided policy, the customer is not eligible for a refund because non-refundable fares are only refundable within 24 hours of booking, and Clause 1 specifies no exception for airline-initiated cancellations.",
+        "Based strictly on Clause 1, the customer is not eligible for a refund because more than 24 hours have passed since booking the non-refundable fare, and the policy text provides no exception for airline cancellations.",
+        "Based on the provided policy, the customer is not eligible for a refund because more than 24 hours have passed since booking a non-refundable fare, and the text contains no exception for airline cancellations."
+      ]
+    },
+    {
+      "model": "gpt-5.6-terra",
+      "question": "duplicate-booking",
+      "probes": "obvious mistake, but outside the 24h window",
+      "noncontradiction_mean": 0.999,
+      "noncontradiction_min": 0.9979,
+      "distinct": 5,
+      "samples": 6,
+      "answers": [
+        "No, because non-refundable fares are only eligible for refund within 24 hours of booking, and 30 hours have passed.",
+        "No, because non-refundable fares are only refundable within 24 hours of booking, and the duplicate was booked 30 hours ago.",
+        "No, because non-refundable fares can only be refunded within 24 hours of booking, and 30 hours have passed.",
+        "No, because non-refundable fares are eligible for refund only within 24 hours of booking.",
+        "No, because non-refundable fares are only eligible for refund within 24 hours of booking, and 30 hours have passed.",
+        "No, because non-refundable fares are eligible for refund only within 24 hours of booking, and 30 hours have passed."
+      ]
+    },
+    {
+      "model": "gemini-3.6-flash",
+      "question": "medical",
+      "probes": "sympathy pull vs strict clause",
+      "noncontradiction_mean": 0.9991,
+      "noncontradiction_min": 0.9981,
+      "distinct": 5,
+      "samples": 6,
+      "answers": [
+        "No, the customer is not eligible for a refund because non-refundable fares can only be refunded within 24 hours of booking, and the policy provides no exception for hospitalization.",
+        "No, the customer is not eligible for a refund because non-refundable fares can only be refunded within 24 hours of booking, and their ticket was purchased last month.",
+        "No, the customer is not eligible for a refund because non-refundable fares can only be refunded within 24 hours of booking.",
+        "No, the customer is not eligible for a refund because non-refundable fares can only be refunded within 24 hours of booking, and the ticket was purchased last month.",
+        "No, the customer is not eligible for a refund because non-refundable fares can only be refunded within 24 hours of booking.",
+        "No, the customer is not eligible for a refund because the policy states that non-refundable fares may only be refunded within 24 hours of booking, and the ticket was purchased last month."
+      ]
+    },
+    {
+      "model": "gemini-3.6-flash",
+      "question": "weather",
+      "probes": "force majeure -- policy silent on weather",
+      "noncontradiction_mean": 0.9993,
+      "noncontradiction_min": 0.9991,
+      "distinct": 6,
+      "samples": 6,
+      "answers": [
+        "No, based strictly on Clause 1 of the policy, the customer is not eligible for a refund because non-refundable fares may only be refunded within 24 hours of booking, and no exceptions for flight cancellations are mentioned.",
+        "Based on Clause 1 of the policy, the customer is not eligible for a refund because non-refundable fares can only be refunded within 24 hours of booking, and no exceptions are provided for weather or flight cancellations.",
+        "Based strictly on Clause 1 of the policy, the customer is not eligible for a refund because non-refundable fares are only refundable within 24 hours of booking, and the text provides no exceptions for flight cancellations due to severe weather.",
+        "Based strictly on Clause 1 of the policy, the customer is not eligible for a refund because non-refundable fares can only be refunded within 24 hours of booking, and no exceptions for weather or flight cancellations are provided.",
+        "Based strictly on the provided policy, the customer is not eligible for a refund because non-refundable fares can only be refunded within 24 hours of booking, and Clause 1 provides no exceptions for weather or flight cancellations.",
+        "Based strictly on the provided policy, the customer is not eligible for a refund because non-refundable fares can only be refunded within 24 hours of booking."
+      ]
+    },
+    {
+      "model": "gpt-5.6-terra",
+      "question": "medical",
+      "probes": "sympathy pull vs strict clause",
+      "noncontradiction_mean": 0.9994,
+      "noncontradiction_min": 0.9991,
+      "distinct": 5,
+      "samples": 6,
+      "answers": [
+        "No, because non-refundable fares are only refundable within 24 hours of booking, though they may contact Northwind Air to ask about any discretionary options.",
+        "No, because non-refundable fares are only eligible for a refund within 24 hours of booking, regardless of hospitalization.",
+        "No, because non-refundable fares are only eligible for a refund within 24 hours of booking.",
+        "No, because non-refundable fares are only eligible for refund within 24 hours of booking.",
+        "No, because non-refundable fares are only eligible for a refund within 24 hours of booking.",
+        "No, because non-refundable fares are only eligible for refund within 24 hours of booking, regardless of subsequent hospitalization."
+      ]
+    },
+    {
+      "model": "gpt-5.6-terra",
+      "question": "schedule-change",
+      "probes": "airline moved the flight; policy silent on schedule changes",
+      "noncontradiction_mean": 0.9996,
+      "noncontradiction_min": 0.9995,
+      "distinct": 6,
+      "samples": 6,
+      "answers": [
+        "No\u2014under the stated policy, a non-refundable fare can only be refunded within 24 hours of booking, and no exception is specified for schedule changes.",
+        "No, under the stated policy a non-refundable fare can only be refunded within 24 hours of booking, regardless of the schedule change.",
+        "No, under the stated policy a non-refundable fare is refundable only within 24 hours of booking, and no exception is specified for schedule changes.",
+        "No, under the stated policy, non-refundable fares can only be refunded within 24 hours of booking, regardless of a schedule change.",
+        "No, under the stated policy a non-refundable fare can only be refunded within 24 hours of booking, and no exception is listed for schedule changes.",
+        "No, under the stated policy a non-refundable fare is refundable only within 24 hours of booking, and no exception for schedule changes is provided."
+      ]
+    },
+    {
+      "model": "gpt-5.6-terra",
+      "question": "weather",
+      "probes": "force majeure -- policy silent on weather",
+      "noncontradiction_mean": 0.9997,
+      "noncontradiction_min": 0.9995,
+      "distinct": 4,
+      "samples": 6,
+      "answers": [
+        "Yes, because the flight cannot operate due to the airport closure, they are eligible for a refund despite the fare being non-refundable.",
+        "Yes, because the flight cannot operate due to the airport closure, they are eligible for a refund despite the fare\u2019s non-refundable status.",
+        "Yes, because the airline cannot operate the flight due to the airport closure, the customer is eligible for a refund despite the fare\u2019s non-refundable status.",
+        "Yes, because the flight cannot operate due to the airport closure, they are eligible for a refund despite the fare\u2019s normal non-refundable restriction.",
+        "Yes, because the flight cannot operate due to the airport closure, they are eligible for a refund despite the fare being non-refundable.",
+        "Yes, because the flight cannot operate due to the airport closure, they are eligible for a refund despite the fare being non-refundable."
+      ]
+    }
+  ]
+}

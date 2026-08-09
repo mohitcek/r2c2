@@ -1,0 +1,137 @@
+{
+  "prices_as_of": "2026-07-31",
+  "prices_per_million": {
+    "gpt-5.6-terra": {
+      "in": 2.5,
+      "cached": 0.25,
+      "out": 15.0,
+      "write": null
+    },
+    "claude-opus-5": {
+      "in": 5.0,
+      "cached": 0.5,
+      "out": 25.0,
+      "write": 6.25
+    },
+    "gemini-3.6-flash": {
+      "in": 1.5,
+      "cached": 0.15,
+      "out": 7.5,
+      "write": null
+    },
+    "deepseek-ai/DeepSeek-V4-Pro": {
+      "in": 1.74,
+      "cached": 0.2,
+      "out": 3.48,
+      "write": null
+    },
+    "Qwen/Qwen3.6-Plus": {
+      "in": 0.5,
+      "cached": null,
+      "out": 3.0,
+      "write": null
+    },
+    "meta-llama/Llama-3.3-70B-Instruct-Turbo": {
+      "in": 0.88,
+      "cached": null,
+      "out": 0.88,
+      "write": null
+    }
+  },
+  "samples_per_scored_request": 6,
+  "receipt": "receipt_uq.json",
+  "question_name": "airline-fault",
+  "assumption": "cache warm across the N samples (requests within TTL); steady-state hit level; measured token counts",
+  "models": [
+    {
+      "provider": "openai",
+      "model": "gpt-5.6-terra",
+      "prompt_tokens": 20451,
+      "steady_cached_tokens": 20448,
+      "hit_share": 0.9999,
+      "mean_output_tokens": 34.8,
+      "cost_single_unscored": 0.05165,
+      "cost_scored_naive_assumption": 0.3099,
+      "cost_scored_with_caching": 0.07986,
+      "multiplier_naive": 6.0,
+      "multiplier_actual": 1.55,
+      "scored_per_1k_requests": 79.86,
+      "naive_per_1k_requests": 309.9
+    },
+    {
+      "provider": "anthropic",
+      "model": "claude-opus-5",
+      "prompt_tokens": 31576,
+      "steady_cached_tokens": 31517,
+      "hit_share": 0.9981,
+      "mean_output_tokens": 76.8,
+      "cost_single_unscored": 0.159801,
+      "cost_scored_naive_assumption": 0.958805,
+      "cost_scored_with_caching": 0.289069,
+      "multiplier_naive": 6.0,
+      "multiplier_actual": 1.81,
+      "scored_per_1k_requests": 289.07,
+      "naive_per_1k_requests": 958.81
+    },
+    {
+      "provider": "together",
+      "model": "deepseek-ai/DeepSeek-V4-Pro",
+      "prompt_tokens": 22248,
+      "steady_cached_tokens": 22016,
+      "hit_share": 0.9896,
+      "mean_output_tokens": 655.7,
+      "cost_single_unscored": 0.040993,
+      "cost_scored_naive_assumption": 0.245959,
+      "cost_scored_with_caching": 0.076436,
+      "multiplier_naive": 6.0,
+      "multiplier_actual": 1.86,
+      "scored_per_1k_requests": 76.44,
+      "naive_per_1k_requests": 245.96
+    },
+    {
+      "provider": "google",
+      "model": "gemini-3.6-flash",
+      "prompt_tokens": 20937,
+      "steady_cached_tokens": 16359,
+      "hit_share": 0.7813,
+      "mean_output_tokens": 39.7,
+      "cost_single_unscored": 0.031703,
+      "cost_scored_naive_assumption": 0.190218,
+      "cost_scored_with_caching": 0.079795,
+      "multiplier_naive": 6.0,
+      "multiplier_actual": 2.52,
+      "scored_per_1k_requests": 79.79,
+      "naive_per_1k_requests": 190.22
+    },
+    {
+      "provider": "together",
+      "model": "Qwen/Qwen3.6-Plus",
+      "prompt_tokens": 22150,
+      "steady_cached_tokens": 0,
+      "hit_share": 0.0,
+      "mean_output_tokens": 2164.0,
+      "cost_single_unscored": 0.017567,
+      "cost_scored_naive_assumption": 0.105402,
+      "cost_scored_with_caching": 0.105402,
+      "multiplier_naive": 6.0,
+      "multiplier_actual": 6.0,
+      "scored_per_1k_requests": 105.4,
+      "naive_per_1k_requests": 105.4
+    },
+    {
+      "provider": "together",
+      "model": "meta-llama/Llama-3.3-70B-Instruct-Turbo",
+      "prompt_tokens": 21378,
+      "steady_cached_tokens": 21248,
+      "hit_share": 0.9939,
+      "mean_output_tokens": 57.7,
+      "cost_single_unscored": 0.018863,
+      "cost_scored_naive_assumption": 0.11318,
+      "cost_scored_with_caching": 0.11318,
+      "multiplier_naive": 6.0,
+      "multiplier_actual": 6.0,
+      "scored_per_1k_requests": 113.18,
+      "naive_per_1k_requests": 113.18
+    }
+  ]
+}

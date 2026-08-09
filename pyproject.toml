@@ -1,0 +1,69 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "r2c2"
+version = "0.1.0"
+description = "Reuse Context, Recheck Consistency: price N-sample LLM confidence checks under prompt caching, then score the answers with UQLM."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+authors = [{ name = "Mohit", email = "mohitcek@gmail.com" }]
+keywords = [
+    "llm",
+    "uncertainty-quantification",
+    "prompt-caching",
+    "hallucination-detection",
+    "uqlm",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+# The core (pricing + economics) is deliberately stdlib-only.
+dependencies = []
+
+[project.optional-dependencies]
+# API runners for collecting samples.
+providers = ["openai>=2.0", "anthropic>=0.60", "google-genai>=1.0"]
+# UQLM noncontradiction scoring (pulls transformers/torch — large).
+scoring = ["uqlm>=0.6.4", "langchain-openai>=0.3"]
+# Figure generators under experiments/figures/.
+figures = ["matplotlib>=3.8", "numpy>=1.26", "pillow>=10.0"]
+all = ["r2c2[providers,scoring,figures]"]
+
+[project.urls]
+Repository = "https://github.com/mohitcek/r2c2"
+Issues = "https://github.com/mohitcek/r2c2/issues"
+
+[project.scripts]
+r2c2 = "r2c2.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=8.0", "ruff>=0.6"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/r2c2"]
+
+[tool.hatch.build.targets.sdist]
+exclude = ["figures/", "uv.lock", "dist/"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+# E741: C/Q/O mirror the notation in the cost equation on purpose.
+ignore = ["E741"]
+
+[tool.ruff.lint.per-file-ignores]
+# Inline HTML/SVG templates read better unwrapped.
+"experiments/figures/*" = ["E501"]

@@ -1,0 +1,411 @@
+{
+  "reps": 300,
+  "calls_per_model": 6,
+  "context_chars": 104318,
+  "question_name": "airline-fault",
+  "question": "A customer booked a non-refundable fare 30 hours ago. The airline then cancelled their flight outright. Are they eligible for a refund? Answer in one sentence.",
+  "runs": [
+    {
+      "provider": "openai",
+      "model": "gpt-5.6-terra",
+      "calls": [
+        {
+          "provider": "openai",
+          "model": "gpt-5.6-terra",
+          "call": 1,
+          "prompt_tokens": 20451,
+          "cached_tokens": 0,
+          "cache_write_tokens": 20448,
+          "output_tokens": 35,
+          "answer": "Under the stated policy, a non-refundable fare is refundable only within 24 hours of booking, so at 30 hours they are not eligible for a refund."
+        },
+        {
+          "provider": "openai",
+          "model": "gpt-5.6-terra",
+          "call": 2,
+          "prompt_tokens": 20451,
+          "cached_tokens": 20448,
+          "cache_write_tokens": 0,
+          "output_tokens": 37,
+          "answer": "The stated policy allows non-refundable-fare refunds only within 24 hours of booking, so it does not establish eligibility at 30 hours even though the flight was cancelled."
+        },
+        {
+          "provider": "openai",
+          "model": "gpt-5.6-terra",
+          "call": 3,
+          "prompt_tokens": 20451,
+          "cached_tokens": 20448,
+          "cache_write_tokens": 0,
+          "output_tokens": 34,
+          "answer": "Under the stated policy, the non-refundable fare is only refundable within 24 hours of booking, so the customer is not eligible based on the information provided."
+        },
+        {
+          "provider": "openai",
+          "model": "gpt-5.6-terra",
+          "call": 4,
+          "prompt_tokens": 20451,
+          "cached_tokens": 20448,
+          "cache_write_tokens": 0,
+          "output_tokens": 37,
+          "answer": "Under the stated policy, a non-refundable fare is refundable only within 24 hours of booking, so a booking made 30 hours ago is not eligible for a refund."
+        },
+        {
+          "provider": "openai",
+          "model": "gpt-5.6-terra",
+          "call": 5,
+          "prompt_tokens": 20451,
+          "cached_tokens": 20448,
+          "cache_write_tokens": 0,
+          "output_tokens": 32,
+          "answer": "Yes\u2014because the airline cancelled the flight, the customer should be eligible for a refund despite the non-refundable fare\u2019s 24-hour booking limit."
+        },
+        {
+          "provider": "openai",
+          "model": "gpt-5.6-terra",
+          "call": 6,
+          "prompt_tokens": 20451,
+          "cached_tokens": 20448,
+          "cache_write_tokens": 0,
+          "output_tokens": 34,
+          "answer": "Under the stated policy, a non-refundable fare is refundable only within 24 hours of booking, so the customer would not be eligible after 30 hours."
+        }
+      ],
+      "error": null
+    },
+    {
+      "provider": "anthropic",
+      "model": "claude-opus-5",
+      "calls": [
+        {
+          "provider": "anthropic",
+          "model": "claude-opus-5",
+          "call": 1,
+          "prompt_tokens": 31576,
+          "cached_tokens": 0,
+          "cache_write_tokens": 31517,
+          "output_tokens": 72,
+          "answer": "Yes \u2014 when the airline itself cancels the flight, the non-refundable fare's 24-hour booking window doesn't apply, so the customer is eligible for a full refund to their original payment method (typically within 7 business days)."
+        },
+        {
+          "provider": "anthropic",
+          "model": "claude-opus-5",
+          "call": 2,
+          "prompt_tokens": 31576,
+          "cached_tokens": 31517,
+          "cache_write_tokens": 0,
+          "output_tokens": 91,
+          "answer": "Yes \u2014 the 24-hour limit applies to customer-initiated cancellations of non-refundable fares, but when the airline itself cancels the flight the fare rules no longer bar a refund, so the customer is entitled to their money back to the original payment method (typically within 7 business days)."
+        },
+        {
+          "provider": "anthropic",
+          "model": "claude-opus-5",
+          "call": 3,
+          "prompt_tokens": 31576,
+          "cached_tokens": 31517,
+          "cache_write_tokens": 0,
+          "output_tokens": 63,
+          "answer": "Yes \u2014 when the airline itself cancels the flight, the fare's non-refundable status and the 24-hour window no longer apply, so the customer is entitled to a full refund to the original payment method."
+        },
+        {
+          "provider": "anthropic",
+          "model": "claude-opus-5",
+          "call": 4,
+          "prompt_tokens": 31576,
+          "cached_tokens": 31517,
+          "cache_write_tokens": 0,
+          "output_tokens": 78,
+          "answer": "Yes \u2014 the 24-hour and non-refundable restrictions govern customer-initiated cancellations, so when the airline cancels the flight itself the fare is refundable to the original payment method regardless of fare type or how long ago it was booked."
+        },
+        {
+          "provider": "anthropic",
+          "model": "claude-opus-5",
+          "call": 5,
+          "prompt_tokens": 31576,
+          "cached_tokens": 31517,
+          "cache_write_tokens": 0,
+          "output_tokens": 89,
+          "answer": "Yes \u2014 the 24-hour limit governs voluntary customer-initiated refunds, but when the airline itself cancels the flight the fare's non-refundable status doesn't apply, so the customer is entitled to a full refund to the original payment method (typically within 7 business days)."
+        },
+        {
+          "provider": "anthropic",
+          "model": "claude-opus-5",
+          "call": 6,
+          "prompt_tokens": 31576,
+          "cached_tokens": 31517,
+          "cache_write_tokens": 0,
+          "output_tokens": 68,
+          "answer": "Yes \u2014 the 24-hour limit applies to customer-initiated cancellations, but when the airline cancels the flight outright the fare's non-refundable status doesn't bar a refund, so they are eligible."
+        }
+      ],
+      "error": null
+    },
+    {
+      "provider": "google",
+      "model": "gemini-3.6-flash",
+      "calls": [
+        {
+          "provider": "google",
+          "model": "gemini-3.6-flash",
+          "call": 1,
+          "prompt_tokens": 20937,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "output_tokens": 37,
+          "answer": "Yes, the customer is eligible for a full refund because when an airline cancels a flight outright, passengers are entitled to a complete refund regardless of the ticket type or when it was booked."
+        },
+        {
+          "provider": "google",
+          "model": "gemini-3.6-flash",
+          "call": 2,
+          "prompt_tokens": 20937,
+          "cached_tokens": 16359,
+          "cache_write_tokens": 0,
+          "output_tokens": 38,
+          "answer": "Yes, the customer is eligible for a full refund because Department of Transportation regulations mandate that passengers receive a full refund when an airline cancels a flight outright, regardless of ticket type or booking timeframe."
+        },
+        {
+          "provider": "google",
+          "model": "gemini-3.6-flash",
+          "call": 3,
+          "prompt_tokens": 20937,
+          "cached_tokens": 16359,
+          "cache_write_tokens": 0,
+          "output_tokens": 44,
+          "answer": "Yes, the customer is eligible for a full refund because when an airline cancels a flight outright, passengers are entitled to a refund regardless of whether the ticket was non-refundable or booked more than 24 hours prior."
+        },
+        {
+          "provider": "google",
+          "model": "gemini-3.6-flash",
+          "call": 4,
+          "prompt_tokens": 20937,
+          "cached_tokens": 16359,
+          "cache_write_tokens": 0,
+          "output_tokens": 31,
+          "answer": "Based on the provided policy, the customer is not eligible for a refund because non-refundable fares can only be refunded within 24 hours of booking."
+        },
+        {
+          "provider": "google",
+          "model": "gemini-3.6-flash",
+          "call": 5,
+          "prompt_tokens": 20937,
+          "cached_tokens": 16359,
+          "cache_write_tokens": 0,
+          "output_tokens": 44,
+          "answer": "Based on the provided policy, the customer is not eligible for a refund because the request exceeds the 24-hour booking window for non-refundable fares and the policy contains no exception for airline-initiated flight cancellations."
+        },
+        {
+          "provider": "google",
+          "model": "gemini-3.6-flash",
+          "call": 6,
+          "prompt_tokens": 20937,
+          "cached_tokens": 16359,
+          "cache_write_tokens": 0,
+          "output_tokens": 44,
+          "answer": "Yes, the customer is eligible for a full refund because when an airline cancels a flight outright, consumer protection regulations mandate a refund regardless of whether the ticket was non-refundable or booked more than 24 hours prior."
+        }
+      ],
+      "error": null
+    },
+    {
+      "provider": "together",
+      "model": "deepseek-ai/DeepSeek-V4-Pro",
+      "calls": [
+        {
+          "provider": "together",
+          "model": "deepseek-ai/DeepSeek-V4-Pro",
+          "call": 1,
+          "prompt_tokens": 22248,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "output_tokens": 632,
+          "answer": "No, per Northwind Air's refund policy, non-refundable fares are only refundable within 24 hours of booking, so the customer is ineligible despite the flight cancellation."
+        },
+        {
+          "provider": "together",
+          "model": "deepseek-ai/DeepSeek-V4-Pro",
+          "call": 2,
+          "prompt_tokens": 22248,
+          "cached_tokens": 22016,
+          "cache_write_tokens": 0,
+          "output_tokens": 792,
+          "answer": "No, according to the policy non-refundable fares may only be refunded within 24 hours of booking, and it has been 30 hours."
+        },
+        {
+          "provider": "together",
+          "model": "deepseek-ai/DeepSeek-V4-Pro",
+          "call": 3,
+          "prompt_tokens": 22248,
+          "cached_tokens": 22016,
+          "cache_write_tokens": 0,
+          "output_tokens": 599,
+          "answer": "According to the stated policy, the customer is not eligible for a refund because non-refundable fares may only be refunded within 24 hours of booking, and 30 hours have elapsed."
+        },
+        {
+          "provider": "together",
+          "model": "deepseek-ai/DeepSeek-V4-Pro",
+          "call": 4,
+          "prompt_tokens": 22248,
+          "cached_tokens": 22016,
+          "cache_write_tokens": 0,
+          "output_tokens": 462,
+          "answer": "Yes, they are eligible for a refund because when an airline cancels a flight, passengers are entitled to a full refund to the original payment method regardless of fare type."
+        },
+        {
+          "provider": "together",
+          "model": "deepseek-ai/DeepSeek-V4-Pro",
+          "call": 5,
+          "prompt_tokens": 22248,
+          "cached_tokens": 22016,
+          "cache_write_tokens": 0,
+          "output_tokens": 709,
+          "answer": "No, they are not eligible for a refund under the stated policy because non-refundable fares are only refundable within 24 hours of booking, and the cancellation occurred after that window."
+        },
+        {
+          "provider": "together",
+          "model": "deepseek-ai/DeepSeek-V4-Pro",
+          "call": 6,
+          "prompt_tokens": 22248,
+          "cached_tokens": 22016,
+          "cache_write_tokens": 0,
+          "output_tokens": 740,
+          "answer": "No, they are not eligible because non-refundable fares are only refundable within 24 hours of booking."
+        }
+      ],
+      "error": null
+    },
+    {
+      "provider": "together",
+      "model": "Qwen/Qwen3.6-Plus",
+      "calls": [
+        {
+          "provider": "together",
+          "model": "Qwen/Qwen3.6-Plus",
+          "call": 1,
+          "prompt_tokens": 22150,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "output_tokens": 1922,
+          "answer": "Based on the provided policy, they are not eligible for a refund because non-refundable fares may only be refunded within 24 hours of booking, and the policy does not include an exception for airline-initiated cancellations."
+        },
+        {
+          "provider": "together",
+          "model": "Qwen/Qwen3.6-Plus",
+          "call": 2,
+          "prompt_tokens": 22150,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "output_tokens": 2005,
+          "answer": "Yes, because an airline-initiated cancellation legally overrides fare restrictions and entitles passengers to a full refund regardless of the 24-hour booking window stated in the policy."
+        },
+        {
+          "provider": "together",
+          "model": "Qwen/Qwen3.6-Plus",
+          "call": 3,
+          "prompt_tokens": 22150,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "output_tokens": 2488,
+          "answer": "No, according to the provided policy they are not eligible because non-refundable fares are only refundable within 24 hours of booking."
+        },
+        {
+          "provider": "together",
+          "model": "Qwen/Qwen3.6-Plus",
+          "call": 4,
+          "prompt_tokens": 22150,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "output_tokens": 2068,
+          "answer": "Yes, because an airline-initiated cancellation overrides the non-refundable fare restriction and entitles the passenger to a full refund regardless of the elapsed 24-hour booking window."
+        },
+        {
+          "provider": "together",
+          "model": "Qwen/Qwen3.6-Plus",
+          "call": 5,
+          "prompt_tokens": 22150,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "output_tokens": 2724,
+          "answer": "No, because the provided policy explicitly limits refunds for non-refundable fares to within 24 hours of booking and does not specify an exception for airline-initiated cancellations."
+        },
+        {
+          "provider": "together",
+          "model": "Qwen/Qwen3.6-Plus",
+          "call": 6,
+          "prompt_tokens": 22150,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "output_tokens": 1777,
+          "answer": "Yes, they are eligible for a full refund because an airline-initiated cancellation overrides the standard non-refundable fare policy and guarantees a refund regardless of the 24-hour booking window."
+        }
+      ],
+      "error": null
+    },
+    {
+      "provider": "together",
+      "model": "meta-llama/Llama-3.3-70B-Instruct-Turbo",
+      "calls": [
+        {
+          "provider": "together",
+          "model": "meta-llama/Llama-3.3-70B-Instruct-Turbo",
+          "call": 1,
+          "prompt_tokens": 21378,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "output_tokens": 59,
+          "answer": "Although the customer booked a non-refundable fare, which is normally only refundable within 24 hours of booking, the airline's cancellation of the flight may be considered an exception, and the customer may be eligible for a refund according to the airline's policies or relevant consumer protection laws."
+        },
+        {
+          "provider": "together",
+          "model": "meta-llama/Llama-3.3-70B-Instruct-Turbo",
+          "call": 2,
+          "prompt_tokens": 21378,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "output_tokens": 51,
+          "answer": "Although the customer booked a non-refundable fare, which is normally only refundable within 24 hours of booking, the airline's cancellation of the flight may be considered an exception, potentially making the customer eligible for a refund despite the time frame."
+        },
+        {
+          "provider": "together",
+          "model": "meta-llama/Llama-3.3-70B-Instruct-Turbo",
+          "call": 3,
+          "prompt_tokens": 21378,
+          "cached_tokens": 21248,
+          "cache_write_tokens": 0,
+          "output_tokens": 59,
+          "answer": "Although the customer booked a non-refundable fare, which is normally only refundable within 24 hours of booking, the airline's cancellation of the flight may be considered an exception, and the customer may be eligible for a refund according to the airline's policies and relevant consumer protection laws."
+        },
+        {
+          "provider": "together",
+          "model": "meta-llama/Llama-3.3-70B-Instruct-Turbo",
+          "call": 4,
+          "prompt_tokens": 21378,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "output_tokens": 59,
+          "answer": "Although the customer booked a non-refundable fare, which is normally only refundable within 24 hours of booking, the airline's cancellation of the flight may be considered an exception, and the customer may be eligible for a refund according to the airline's policies and relevant consumer protection laws."
+        },
+        {
+          "provider": "together",
+          "model": "meta-llama/Llama-3.3-70B-Instruct-Turbo",
+          "call": 5,
+          "prompt_tokens": 21378,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "output_tokens": 59,
+          "answer": "Although the customer booked a non-refundable fare, which is normally only refundable within 24 hours of booking, the airline's cancellation of the flight may be considered an exception, and the customer may be eligible for a refund according to the airline's policies and relevant consumer protection laws."
+        },
+        {
+          "provider": "together",
+          "model": "meta-llama/Llama-3.3-70B-Instruct-Turbo",
+          "call": 6,
+          "prompt_tokens": 21378,
+          "cached_tokens": 21248,
+          "cache_write_tokens": 0,
+          "output_tokens": 59,
+          "answer": "Although the customer booked a non-refundable fare, which is normally only refundable within 24 hours of booking, the airline's cancellation of the flight may be considered an exception, and the customer may be eligible for a refund according to the airline's policies and relevant consumer protection laws."
+        }
+      ],
+      "error": null
+    }
+  ]
+}
