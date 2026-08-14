@@ -6,7 +6,7 @@ Surface is M over context tokens (C) and output tokens (O), with Q and the provi
 rates held fixed. The measured sweep points are plotted on it, so you can see the real
 runs sitting on the predicted surface rather than just being told they match.
 
-    python experiments/figures/make_surface_gif.py --frames 36
+    python experiments/figures/make_surface_gif.py
 """
 
 import argparse
@@ -51,8 +51,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--sweep", default="receipts/context_sweep.json")
     ap.add_argument("--model", default="gpt-5.6-terra")
-    ap.add_argument("--frames", type=int, default=36)
-    ap.add_argument("--size", type=int, default=760)
+    ap.add_argument("--frames", type=int, default=100)
     ap.add_argument("--out", default="figures/surface.gif")
     args = ap.parse_args()
 
@@ -70,15 +69,16 @@ def main():
     pts = measured_points(args.sweep, args.model)
     print(f"{args.model}: floor {floor:.2f}x, {len(pts)} measured points")
 
-    dpi = 100
-    inches = args.size / dpi
     frames = []
     with tempfile.TemporaryDirectory() as tmp:
         tmp = Path(tmp)
         for i in range(args.frames):
             azim = -60 + 360 * i / args.frames
-            fig = plt.figure(figsize=(inches, inches), dpi=dpi, facecolor=PAPER)
-            ax = fig.add_subplot(111, projection="3d", facecolor=PAPER)
+            # 16:9 to match the rest of the figure set; fixed canvas, no tight-crop,
+            # so every frame is identical and the box fills the width
+            fig = plt.figure(figsize=(9.6, 5.4), dpi=100, facecolor=PAPER)
+            ax = fig.add_axes((-0.02, -0.06, 1.04, 1.12), projection="3d", facecolor=PAPER)
+            ax.set_box_aspect((1.55, 1.55, 0.72), zoom=1.08)
 
             ax.plot_surface(
                 X, Y, Z, cmap=CMAP, vmin=floor, vmax=N,
@@ -119,19 +119,8 @@ def main():
             ax.grid(color="#D5DDE0", linewidth=0.5)
             ax.view_init(elev=24, azim=azim)
 
-            fig.text(0.055, 0.955, "M = N − f(N − w − (N−1)c)      f = C / (C + Q + kO)",
-                     fontsize=11.5, color=INK, family="monospace", weight="bold")
-            fig.text(0.055, 0.918,
-                     f"{N} samples · {args.model} rates · teal = measured sweep, "
-                     f"floor {floor:.2f}×",
-                     fontsize=9.5, color=INK3, family="monospace")
-            fig.text(0.055, 0.035,
-                     f"output tokens are priced {k:g}× input here, so they dilute the "
-                     f"cacheable share {k:g}× faster than context builds it",
-                     fontsize=9, color=INK3, family="monospace")
-
             png = tmp / f"f{i:03d}.png"
-            fig.savefig(png, facecolor=PAPER, bbox_inches="tight", pad_inches=0.18)
+            fig.savefig(png, facecolor=PAPER)
             plt.close(fig)
             frames.append(Image.open(png).convert("RGB"))
             if (i + 1) % 6 == 0:
@@ -143,10 +132,10 @@ def main():
 
         out = Path(args.out)
         out.parent.mkdir(parents=True, exist_ok=True)
-        pal = [f.quantize(colors=96, method=Image.MEDIANCUT, dither=Image.FLOYDSTEINBERG)
+        pal = [f.quantize(colors=80, method=Image.MEDIANCUT, dither=Image.FLOYDSTEINBERG)
                for f in frames]
         pal[0].save(out, save_all=True, append_images=pal[1:],
-                    duration=115, loop=0, optimize=True, disposal=2)
+                    duration=200, loop=0, optimize=True, disposal=2)
 
     mb = out.stat().st_size / 1024 / 1024
     print(f"\nwrote {out}  {len(frames)} frames  {w_px}x{h_px}  {mb:.2f} MB")

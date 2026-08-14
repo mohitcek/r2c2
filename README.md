@@ -131,4 +131,4 @@ tests/               offline: validates the closed form against the receipts
 
 ## Provenance
 
-Written to accompany the blog post *"As Context Grows, Confidence Scoring Gets Cheaper"*. Built on [UQLM](https://github.com/cvs-health/uqlm). Prices and model IDs are as of 2026-07-31 — verify yours before trusting any multiplier here. MIT licensed.
+Written to accompany the blog post [*"Prompt Caching Makes Self-Consistency Cheap for Long-Context LLMs"*](https://medium.com/@mohitsinghchauhan/prompt-caching-makes-self-consistency-cheap-for-long-context-llms-c611ba4f5237). Built on [UQLM](https://github.com/cvs-health/uqlm). Prices and model IDs are as of 2026-07-31 — verify yours before trusting any multiplier here. MIT licensed.
