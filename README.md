@@ -124,4 +124,4 @@ tests/             offline; validates the closed form against a measured receipt
 
 ## Provenance
 
-Grew out of the blog post *"Prompt Caching Makes Self-Consistency Cheap for Long-Context LLMs"* — the experiment scripts, raw JSON receipts, and figures are on the [`blog`](../../tree/blog) branch. Built on [UQLM](https://github.com/cvs-health/uqlm). Prices and model IDs are as of 2026-07-31 — verify yours before trusting any multiplier here. MIT licensed.
+Grew out of the blog post [*"Prompt Caching Makes Self-Consistency Cheap for Long-Context LLMs"*](https://medium.com/@mohitsinghchauhan/prompt-caching-makes-self-consistency-cheap-for-long-context-llms-c611ba4f5237) — the experiment scripts, raw JSON receipts, and figures are on the [`blog`](../../tree/blog) branch. Built on [UQLM](https://github.com/cvs-health/uqlm). Prices and model IDs are as of 2026-07-31 — verify yours before trusting any multiplier here. MIT licensed.
