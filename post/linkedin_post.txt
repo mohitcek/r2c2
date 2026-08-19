@@ -1,0 +1,26 @@
+Your agent's growing context is paying for its own confidence score.
+
+Nobody ships LLM confidence scoring because "6 samples means paying 6×." I measured it: 6 samples cost 1.55× a single unscored call.
+
+To be explicit, since this is the kind of number people rightly squint at: that's a RELATIVE figure. Adding scoring still costs you more than not adding it — your bill goes up. The claim is just that the surcharge is ~55%, not the ~500% everyone assumes. On GPT-5.6 Terra, 1,000 requests go from $52 to $80, not to $310.
+
+Here's what the objection misses: consistency scoring resends the SAME prompt, byte for byte. That's not just cache-friendly — it's the single best-case workload for prompt caching. Sample 1 pays full price. Samples 2–6 read your 21k-token context at ~90% off. Only the answers regenerate — and the answers are what you're checking for contradictions.
+
+Surcharge for adding scoring, measured across 6 models (input+output, cache warm):
+→ GPT-5.6 Terra: +55% ($52 → $80 per 1k requests)
+→ Claude Opus 5: +81% ($160 → $289)
+→ DeepSeek-V4-Pro: +86% ($41 → $76)
+→ Gemini 3.6 Flash: +152% ($32 → $80)
+→ Qwen / Llama on Together: still +500% — no cached pricing. The receipt includes the failures.
+
+I swept context size to check the trend rather than assert it — 1.4k to 440k tokens, each on its own cold prefix. Every curve falls and flattens: GPT-5.6 Terra goes 1.84× → 1.50×, landing exactly on its predicted floor. Below ~7k tokens Gemini doesn't cache at all and sits at a flat 6.00× — so if your prompts are small, the old objection is simply correct.
+
+And what does it catch? I asked a question my test policy doesn't answer (airline cancels a non-refundable fare). Qwen answered No-Yes-No-Yes-No-Yes — a literal coin flip on a refund decision. Gemini cited DOT regulations that appear nowhere in the prompt. All 36 answers sounded equally confident. The 0.40 noncontradiction score was the only warning.
+
+Cache the reading. Re-sample the answer. Score the agreement. Route the 0.40s to a human.
+
+That's the real takeaway for agent builders: contexts keep growing despite everyone's compaction efforts, and that growth walks you down this curve. The workloads where verification matters most are becoming the ones where it's cheapest.
+
+Full writeup, receipts, and the r2c2 repo (I work on UQLM, the open-source library used here): https://medium.com/@mohitsinghchauhan/prompt-caching-makes-self-consistency-cheap-for-long-context-llms-c611ba4f5237
+
+#LLM #GenAI #AIEngineering #Hallucination #UncertaintyQuantification #PromptCaching
