@@ -15,7 +15,7 @@ The most portable way to catch an LLM being unreliable is to sample the same pro
 
 And the score catches real failures: on a question the test policy doesn't answer, Qwen went No-Yes-No-Yes-No-Yes across six samples (noncontradiction 0.40) and Gemini cited regulations that appear nowhere in the prompt. On a question the policy answers directly, every model scores 0.99+.
 
-r2c2 turns that finding into a workflow: **estimate → sample → score**. The measurements, experiment scripts, receipts, and figures behind these numbers live on the [`blog`](../../tree/blog) branch.
+r2c2 turns that finding into a workflow: **estimate → sample → score**. The measurements, experiment scripts, receipts, and figures behind these numbers live on the [`medium-blog-post`](../../tree/medium-blog-post) branch.
 
 ## Install
 
@@ -81,6 +81,17 @@ calls = sample("gpt-5.6-terra", context, question, n_samples=6)
 confidence([c.answer for c in calls])   # local NLI, no extra API calls
 ```
 
+## Use it from an agent
+
+`skills/r2c2-feasibility/` is an Agent Skill (a `SKILL.md` with a script and a
+reference) that lets a coding agent answer "is consistency scoring affordable here, and
+from what context size?" by calling this package rather than guessing. Copy the folder
+into your agent's skills directory — `~/.claude/skills/` for Claude Code — and ask
+something like *"would 6-sample scoring be affordable for a 30k-token RAG agent on Claude
+Opus 5 with 200-token answers?"*. The skill runs `scripts/feasibility.py`, which returns a
+JSON verdict (`affordable` / `not_yet` + the crossover context size /
+`never_at_this_threshold` + the floor) with the caveats that apply.
+
 ## The cost model
 
 For N samples of the same prompt:
@@ -106,6 +117,7 @@ src/r2c2/
   check.py         check(): the estimate -> sample -> score loop
   cli.py           r2c2 models | estimate | check
 tests/             offline; validates the closed form against a measured receipt
+skills/r2c2-feasibility/   agent skill: SKILL.md + scripts/feasibility.py + references/
 ```
 
 ## Things that will bite you
@@ -119,9 +131,9 @@ tests/             offline; validates the closed form against a measured receipt
 
 ## Roadmap
 
-- An agent skill / MCP server wrapping `estimate` and `check`, so an agent can decide at runtime whether a consistency check is cheap enough and run it when it is (`CheckResult.to_dict()` is the intended tool payload).
+- An MCP server exposing `estimate` / `required_context` / `check` as tools, for clients that don't read `SKILL.md` (`CheckResult.to_dict()` is the intended tool payload).
 - Additional UQLM black-box scorers (semantic entropy, exact-match) behind the same interface.
 
 ## Provenance
 
-Grew out of the blog post [*"Prompt Caching Makes Self-Consistency Cheap for Long-Context LLMs"*](https://medium.com/@mohitsinghchauhan/prompt-caching-makes-self-consistency-cheap-for-long-context-llms-c611ba4f5237) — the experiment scripts, raw JSON receipts, and figures are on the [`blog`](../../tree/blog) branch. Built on [UQLM](https://github.com/cvs-health/uqlm). Prices and model IDs are as of 2026-07-31 — verify yours before trusting any multiplier here. MIT licensed.
+Grew out of the blog post [*"Prompt Caching Makes Self-Consistency Cheap for Long-Context LLMs"*](https://medium.com/@mohitsinghchauhan/prompt-caching-makes-self-consistency-cheap-for-long-context-llms-c611ba4f5237) — the experiment scripts, raw JSON receipts, and figures are on the [`medium-blog-post`](../../tree/medium-blog-post) branch. Built on [UQLM](https://github.com/cvs-health/uqlm). Prices and model IDs are as of 2026-07-31 — verify yours before trusting any multiplier here. MIT licensed.
