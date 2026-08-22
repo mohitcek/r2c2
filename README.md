@@ -13,6 +13,8 @@ The most portable way to catch an LLM being unreliable is to sample the same pro
 | Qwen3.6-Plus (Together) | 0% | 6.00× |
 | Llama-3.3-70B-Turbo (Together) | 99.4% (no cached price) | 6.00× |
 
+**Read the last two rows first.** Qwen cached nothing. Llama cached 99.4% of the prompt and still saved nothing, because Together publishes cached rates per model and Llama has none — a cache hit is not a discount. Before trusting any multiplier on a provider you haven't measured, check that its price sheet has a cached input line. Without one, consistency sampling costs the full N× no matter what the cache telemetry reports.
+
 And the score catches real failures: on a question the test policy doesn't answer, Qwen went No-Yes-No-Yes-No-Yes across six samples (noncontradiction 0.40) and Gemini cited regulations that appear nowhere in the prompt. On a question the policy answers directly, every model scores 0.99+.
 
 r2c2 turns that finding into a workflow: **estimate → sample → score**. The measurements, experiment scripts, receipts, and figures behind these numbers live on the [`medium-blog-post`](../../tree/medium-blog-post) branch.
@@ -123,7 +125,7 @@ skills/r2c2-feasibility/   agent skill: SKILL.md + scripts/feasibility.py + refe
 ## Things that will bite you
 
 - **Fire sample 1 alone, then fan out.** A cache entry is readable only after the first response begins; N concurrent identical calls all miss (`sample` is sequential for this reason).
-- **A cache hit is not a discount.** Llama on Together cached 99.4% of the prompt and saved nothing — no published cached price means hits bill at full rate.
+- **No cached rate means no saving** (see the table above). `r2c2` encodes this: a model with no cached price on file gets `c = 1`, so `estimate` pins the multiplier at N rather than promising a discount the invoice won't show.
 - **Gemini 3 Flash has a caching dead zone** at ~9k–17k prompt tokens and caches in 8,192-token blocks above it; below ~7k it caches nothing at all.
 - **Anthropic's `input_tokens` is the uncached remainder only** — total prompt size is `input + cache_creation + cache_read`. It also charges a one-time 1.25× cache write, putting its floor at 1.75× rather than 1.50×.
 - **Scores are rankings, not probabilities.** Consistency is not correctness: a model that hedges identically six times scores 1.00. Tune thresholds on your own traffic.
