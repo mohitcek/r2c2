@@ -135,3 +135,24 @@ def test_required_context_requires_exactly_one_price_source():
             model="gpt-5.6-terra",
             price=ModelPrice(input=1.0, output=2.0),
         )
+
+
+def test_summary_names_a_missing_cached_rate():
+    """The reason a Together model sits at 6x should be on the line, not inferred."""
+    est = estimate(context_tokens=21_000, output_tokens=40,
+                   model="meta-llama/Llama-3.3-70B-Instruct-Turbo")
+    assert est.cached_ratio == 1.0
+    assert "no cached rate" in est.summary()
+    assert "floor 6.00x" in est.summary()
+
+
+def test_summary_shows_the_write_premium_that_lifts_the_floor():
+    est = estimate(context_tokens=21_000, output_tokens=40, model="claude-opus-5")
+    assert est.write_ratio == 1.25
+    assert "w=1.25" in est.summary()
+    assert "floor 1.75x" in est.summary()
+
+
+def test_summary_omits_w_when_there_is_no_write_premium():
+    est = estimate(context_tokens=21_000, output_tokens=40, model="gpt-5.6-terra")
+    assert "c=0.10" in est.summary() and "w=" not in est.summary()

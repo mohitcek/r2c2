@@ -66,6 +66,8 @@ class CheckResult:
             "question": self.question,
             "sampled": self.sampled,
             "estimated_multiplier": round(self.estimate.multiplier, 2),
+            "floor": round(self.estimate.floor, 2),
+            "rates": self.estimate.rates,
             "measured_multiplier": (
                 round(self.measured_multiplier, 2) if self.sampled else None
             ),

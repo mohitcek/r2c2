@@ -55,6 +55,15 @@ uv run r2c2 estimate --model gpt-5.6-terra --context-tokens 2000 --output-tokens
 # threshold 1.80x -> expensive here; clears from ~4,060 context tokens at this output length
 ```
 
+Every estimate prints the rate ratios that produced its floor, so a provider with no
+cached line names itself instead of looking like a rounding error:
+
+```text
+gpt-5.6-terra          ... floor 1.50x at c=0.10
+claude-opus-5          ... floor 1.75x at c=0.10, w=1.25     <- 1.25x cache write
+Llama-3.3-70B-Turbo    ... floor 6.00x at c=1.00 — no cached rate
+```
+
 **2. Run the whole loop with one call.** `check` estimates, refuses if the surcharge is unacceptable, and otherwise collects N samples (call 1 warms the cache, calls 2–N ride it) and scores their agreement:
 
 ```python
@@ -125,7 +134,7 @@ skills/r2c2-feasibility/   agent skill: SKILL.md + scripts/feasibility.py + refe
 ## Things that will bite you
 
 - **Fire sample 1 alone, then fan out.** A cache entry is readable only after the first response begins; N concurrent identical calls all miss (`sample` is sequential for this reason).
-- **No cached rate means no saving** (see the table above). `r2c2` encodes this: a model with no cached price on file gets `c = 1`, so `estimate` pins the multiplier at N rather than promising a discount the invoice won't show.
+- **No cached rate means no saving** (see the table above). `r2c2` encodes this: a model with no cached price on file gets `c = 1`, so `estimate` pins the multiplier at N and prints `c=1.00 — no cached rate` rather than promising a discount the invoice won't show.
 - **Gemini 3 Flash has a caching dead zone** at ~9k–17k prompt tokens and caches in 8,192-token blocks above it; below ~7k it caches nothing at all.
 - **Anthropic's `input_tokens` is the uncached remainder only** — total prompt size is `input + cache_creation + cache_read`. It also charges a one-time 1.25× cache write, putting its floor at 1.75× rather than 1.50×.
 - **Scores are rankings, not probabilities.** Consistency is not correctness: a model that hedges identically six times scores 1.00. Tune thresholds on your own traffic.

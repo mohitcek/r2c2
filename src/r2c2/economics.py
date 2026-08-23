@@ -85,6 +85,8 @@ class Estimate:
     floor: float
     cost_single: float
     cost_scored: float
+    cached_ratio: float
+    write_ratio: float
 
     @property
     def surcharge(self) -> float:
@@ -95,11 +97,21 @@ class Estimate:
         """True when the multiplier is at or below the caller's cost tolerance."""
         return self.multiplier <= threshold
 
+    @property
+    def rates(self) -> str:
+        """The resolved rate ratios behind the floor — c=1 means nothing was discounted."""
+        if self.cached_ratio >= 1.0:
+            return "c=1.00 — no cached rate"
+        note = f"c={self.cached_ratio:.2f}"
+        if self.write_ratio != 1.0:
+            note += f", w={self.write_ratio:.2f}"
+        return note
+
     def summary(self) -> str:
         name = self.model or "custom price"
         return (
             f"{name}: {self.n_samples} samples cost {self.multiplier:.2f}x one call "
-            f"(naive guess {self.n_samples}.00x, floor {self.floor:.2f}x) — "
+            f"(naive guess {self.n_samples}.00x, floor {self.floor:.2f}x at {self.rates}) — "
             f"${self.cost_single:.6f} -> ${self.cost_scored:.6f} per request"
         )
 
@@ -173,4 +185,6 @@ def estimate(
         floor=cost_floor(n_samples, price),
         cost_single=single,
         cost_scored=m * single,
+        cached_ratio=price.cached_ratio,
+        write_ratio=price.write_ratio,
     )

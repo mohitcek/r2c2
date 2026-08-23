@@ -134,6 +134,7 @@ def run(args):
         "naive_multiplier": float(args.samples),
         "surcharge_pct": round(est.surcharge * 100, 1),
         "floor": round(est.floor, 3),
+        "rates": est.rates,
         "within_threshold": est.within(args.threshold),
         "required_context_tokens": None if needed is None else round(needed),
         "cost_per_request_usd": {
